@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+.row::-webkit-scrollbar{
+    display:none;
+}
+html,body{
+    overflow-x: hidden!important;
+}

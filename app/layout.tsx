@@ -13,7 +13,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className='bg-primary-black text-[#fff] h-[500vh] overflow-scroll'>{children}</body>
+      <body className='bg-primary-black text-[#fff]'>{children}</body>
     </html>
   )
 }
