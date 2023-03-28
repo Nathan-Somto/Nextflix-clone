@@ -1,3 +1,4 @@
+import Banner from "@/app/components/Banner";
 import Row from "@/app/components/Row";
 import { requests } from "@/app/providers/requests";
 import { Rows } from "@/app/types";
@@ -82,7 +83,9 @@ async function Browse() {
   ]);
 
   return (
-    <main className="mt-[4.25rem]">
+    <>
+     <Banner data={netflixOriginals.results}/>
+    <main>
       <Row
         title={"Netflix Originals"}
         data={netflixOriginals.results}
@@ -133,6 +136,7 @@ async function Browse() {
         isLargeRow={false}
       />
     </main>
+    </>
   );
 }
 

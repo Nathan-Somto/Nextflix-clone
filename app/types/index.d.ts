@@ -21,6 +21,7 @@ export interface IMovie{
 
 }
 export interface ITvOriginals{
+    title: string;
     backdrop_path:string;
     first_air_date:string;
     genre_ids:number[];
@@ -34,6 +35,22 @@ export interface ITvOriginals{
     origin_country:string[];
     original_language:string;
 
+}
+interface IVideo{
+    iso_639_1:string;
+    iso_3166_1:string;
+    name:string;
+    key:string;
+    site:string;
+    size:number;
+    type:string;
+    official:boolean;
+    piblished_at:string;
+    id:string;
+}
+export interface Video{
+id:number;
+results:IVideo[];
 }
 type resultTvOriginals = {results:ITvOriginals[]}
 type resultMovie = {results:IMovie[]}
