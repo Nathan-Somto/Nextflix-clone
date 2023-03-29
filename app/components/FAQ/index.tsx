@@ -15,8 +15,10 @@ type faq = {
 function FAQ({data}:props) {
   const [open, setOpen] = useState<Open>({'0':false})
   return (
-    <section className={'w-[80%] mx-auto'}>
-      <h1 className="text-[#fff] font-bold text-3xl mb-6">Frequently Asked Questions</h1>
+    <>
+     <hr className={'h-[5px] border-mid-gray border-solid border-t-[6px] '}/>
+    <section className={'w-[80%] mx-auto mt-9'}>
+      <h1 className="text-[#fff] font-bold text-2xl sm:text-3xl lg:text-5xl mb-6 text-center">Frequently Asked Questions</h1>
       {
       data.map((item,index)=>(
       <div key={index}>
@@ -24,6 +26,7 @@ function FAQ({data}:props) {
       <Body open={open} para={item.para} index={index.toString()}/>
       </div>))
       }</section>
+      </>
   )
 }
 
