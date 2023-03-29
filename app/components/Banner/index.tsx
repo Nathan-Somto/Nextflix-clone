@@ -16,8 +16,7 @@ function Banner({ data }: { data: ITvOriginals[] }) {
    setIndex(randNum(data.length));
     (async function () {
    /*  */console.log(data[index].id);
-   console.log(index)
-   console.log(API_KEY);
+  
       let res = await fetch(`https://api.themoviedb.org/3/tv/${data[index].id}/videos?api_key=3cbaa7017430fa9e773de762de7c63a0&language=en-US`);
       let videoData:Video = await res.json();
       console.log(videoData)

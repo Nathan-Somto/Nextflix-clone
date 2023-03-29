@@ -2,13 +2,14 @@ import Image from 'next/image'
 import Nav from './components/Nav'
 import Hero from './components/Hero'
 import HomeSection from './components/HomeSection';
+import FAQ from './components/FAQ';
 
 export async function getData(){
   let data = await import('./data/homeSection.json');
   return data;
 }
 export default async function Home() {
-  let {data} =  await getData();
+  let {data,faq} =  await getData();
   return (
     <>
     <Nav/>
@@ -20,6 +21,7 @@ export default async function Home() {
       <HomeSection h2={item.h2} h3={item.h3} index={index} key={index}/>
     ))
   }
+  <FAQ data={faq}/>
 
    </main>
    </>
