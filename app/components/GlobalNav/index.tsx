@@ -25,7 +25,7 @@ function GlobalNav() {
     <nav
       className={`fixed h-[4.25rem] w-full top-0 ${
         show ? "bg-[#0d0d0d] shadow-lg" : "bg-transparent"
-      } z-[10] flex items-center transition-all duration-200 ease-in`}
+      } z-[900] flex items-center transition-all duration-200 ease-in`}
     >
       <div
         className={

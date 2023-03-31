@@ -3,12 +3,20 @@ import { IMovie, ITvOriginals, title } from "@/app/types";
 import { BASE_IMG_URL } from "@/app/providers/common";
 import React,{useRef, useState} from "react";
 import Image from "next/image";
-import {Carousel} from  'react-responsive-carousel';
+import genres from "@/app/data/genres";
+import { findGenres, randNum } from "@/app/utils";
+import { AiFillPlayCircle, AiFillPlusCircle } from "react-icons/ai";
+import{FaChevronCircleDown, FaThumbsUp, FaVolumeUp} from "react-icons/fa";
+import {motion} from 'framer-motion';
+
 type props = {
   data: IMovie[] | ITvOriginals[];
   title: title;
   isLargeRow: boolean;
 };
+type details ={
+  [id:number]:boolean
+}
 function Row({ data, title, isLargeRow }: props): JSX.Element {
   const rowRef = useRef<HTMLElement>(null);
   const[show, setShow] = useState(false);
@@ -17,9 +25,6 @@ function Row({ data, title, isLargeRow }: props): JSX.Element {
     setShow(true);
     if(rowRef.current!== null){
 const  {scrollLeft, clientWidth} = rowRef.current; 
-console.log(clientWidth);
-console.log(`minus: ${scrollLeft - clientWidth}`);
-console.log(`add: ${scrollLeft + clientWidth}`);
 const scroll = direction === 'left' ? scrollLeft - clientWidth : scrollLeft + clientWidth;
 rowRef.current.scroll({left:scroll,behavior:'smooth'});
     }
@@ -27,7 +32,8 @@ rowRef.current.scroll({left:scroll,behavior:'smooth'});
   return (
     <div className="relative mt-6">
      <h1 className="text-3xl font-semibold ">{title}</h1>
-     <div className={`text-[1.8rem] bg-[rgb(0,0,0)] text-[#fff] top-0 left-[5px] h-12 flex items-center justify-center rounded-md w-12 p-4 absolute bottom-0 m-auto cursor-pointer z-[50] hover:opacity-50 ${!show ? 'hidden':""}`}
+     <motion.div initial={{x:'-100%'}} whileInView={{x:'0'}}className="w-[10%] min-w-[100px] h-[2px] bg-primary-red mt-2"></motion.div>
+     <div className={`text-[1.8rem] bg-[rgb(0,0,0)] text-[#fff] top-0 left-[5px] h-12 flex items-center justify-center rounded-md w-12 p-4 absolute bottom-0 m-auto cursor-pointer z-[500] hover:opacity-50 ${!show ? 'hidden':""}`}
       onClick={()=>handleScrollClick('left')}
      >
       {'<'}
@@ -39,20 +45,61 @@ rowRef.current.scroll({left:scroll,behavior:'smooth'});
   {data && data.map((item, index) => (
           /* check is done in case of a dead link  */ <div
             key={item.id}
-           
-            className={`p-[1.25rem] relative hover:scale-110  rounded-md overflow-hidden bg-cover bg-center flex-shrink-0 mr-[0.825rem] transition-all duration-400   ${
+         
+            className={`p-[1.25rem] relative movie__poster  rounded-md  bg-cover bg-center flex-shrink-0 mr-[0.825rem] transition-all duration-400   ${
               isLargeRow
                 ? "max-w-[200px] h-[300px] min-w-[150px] w-[30%] max-h-[300px]"
                 : "h-[200px] w-[200px]"
             }`}
           >
-           <Image alt={item.name} src={`${(isLargeRow? BASE_IMG_URL + item.poster_path: BASE_IMG_URL + item.backdrop_path)}`} fill={true}/>
+           <Image alt={item.name} src={`${(isLargeRow? BASE_IMG_URL + item.poster_path: BASE_IMG_URL + item.backdrop_path)}`} fill={true} className="movie__poster--image"  />
+           <motion.div 
+           initial={{scale:0.5,opacity:0}}
+           animate={{scale:1,opacity:[0,0,0,1]}}
+           transition={{
+            ease: "easeIn",
+            duration: 0.4,
+          }}
+   className={`absolute ${isLargeRow ?'h-[350px] w-[200px]':'h-[200px] w-[200px]'} top-0 z-[300]   rounded-xl  pb-2 movie__details`} >
+            <div className={`${isLargeRow? 'h-[200px] w-[200px]':'h-[100px] w-[200px]'} relative`}>
+            <Image alt={item.name} src={`${(isLargeRow? BASE_IMG_URL + item.poster_path: BASE_IMG_URL + item.backdrop_path)}`} fill={true}/>
+            </div>
+         
+           <div className={`absolute ${isLargeRow?'top-[20%]':'top-[10%]'} left-[10px] break-words`}><h3 className={`font-semibold ${isLargeRow ?'text-xl':'text-[1.1rem]'} text-[#fff]`}>{item?.name || item?.title}</h3></div>
+          
+           <div className={`px-4 pt-4 bg-primary-black `}>
+           <div className="flex w-full justify-between items-center">
+            <div className="flex items-center space-x-3">
+              <AiFillPlayCircle size={18} color="rgb(150,150,150)"/>
+              <AiFillPlusCircle size={18} color="rgb(150,150,150)"/>
+                <FaThumbsUp size={'18'} color={'rgb(150,150,150)'}/>
+              
+            </div>
+            <FaChevronCircleDown size={18} color="rgb(150,150,150)"/>
+           </div>
+           <div className="flex  space-x-2 items-center text-[12px] mt-2 font-medium">
+            <p className={`${item.vote_average <5.0 ?'text-[#d23d3d]':'text-[#2a842a]'}`}>{Math.ceil(item.vote_average *10)}% Match</p>
+            <p><span>{randNum(4)}h</span> <span>{randNum(60)}m</span></p>
+            <div className="h-[30px] w-[30px] p-1 border-2 border-solid border-mid-gray text-center">
+             HD
+            </div>
+           </div>
+            <ul className="flex space-x-1  text-[0.85rem] p-2 flex-wrap">
+              {
+                findGenres(genres,item.genre_ids).map((item,index)=>
+                (
+                  <li key={`${item}-${index}`}>{item}</li>
+                ))
+              }
+            </ul>
+           </div>
+           </motion.div>
           </div>
         ))}
 
     
     </section>
-    <div className="text-[1.8rem] bg-[rgb(0,0,0)] text-[#fff] top-0 right-[5px] absolute bottom-0 m-auto h-12 w-12 items-center flex justify-center rounded-md p-4 cursor-pointer z-[50] hover:opacity-50" onClick={()=>handleScrollClick('right')}>
+    <div className="text-[1.8rem] bg-[rgb(0,0,0)] text-[#fff] top-0 right-[5px] absolute bottom-0 m-auto h-12 w-12 items-center flex justify-center rounded-md p-4 cursor-pointer z-[500] hover:opacity-50" onClick={()=>handleScrollClick('right')}>
   {'>'}
 </div>
     </div>

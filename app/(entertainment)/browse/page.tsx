@@ -2,6 +2,7 @@ import Banner from "@/app/components/Banner";
 import Row from "@/app/components/Row";
 import { requests } from "@/app/providers/requests";
 import { Rows } from "@/app/types";
+import { randNum } from "@/app/utils";
 import React from "react";
 export async function getNetflixOriginals() {
   const res = await fetch(requests.fetchNetflixOriginals, {
@@ -10,6 +11,7 @@ export async function getNetflixOriginals() {
   const data = res.json();
   return data;
 }
+
 export async function getTrending() {
   const res = await fetch(requests.fetchTrending, { cache: "no-store" });
   return res.json();
@@ -81,11 +83,11 @@ async function Browse() {
     documentariesData,
     dramaMoviesData,
   ]);
-
+const index = randNum(netflixOriginals.results.length);
   return (
     <>
-     <Banner data={netflixOriginals.results}/>
-    <main>
+     <Banner data={netflixOriginals.results} index={index}/>
+    <main className="mt-[-5%]">
       <Row
         title={"Netflix Originals"}
         data={netflixOriginals.results}
