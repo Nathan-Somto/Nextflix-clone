@@ -64,7 +64,7 @@ function TrailerModal() {
         transition={{ duration: 0.4 ,delay:0.3}}
         className="overflow-scroll  w-[80%] max-w-[600px] absolute top-[5%] left-[50%]  translate-x-[-50%] mx-auto"
       >
-        <div className="absolute  right-[0] z-[50]">
+        <div className="absolute  right-[0] z-[50] cursor-pointer">
           <AiOutlineClose
             size={50}
             color="#fff"

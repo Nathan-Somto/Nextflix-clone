@@ -76,7 +76,7 @@ rowRef.current.scroll({left:scroll,behavior:'smooth'});
             <div className="flex items-center space-x-3 cursor-pointer">
               <AiFillPlayCircle size={18} color="rgb(250,250,250)" onClick={()=>
                 {
-                  setTrailer({...trailer,...{id:item.id}});
+                  setTrailer({...trailer,...{id:item.id,media_type}});
                   setOpenModal(true);
                 }}/>
               <AiFillPlusCircle size={18} color="rgb(250,250,250)"/>
