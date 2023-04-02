@@ -12,7 +12,7 @@ function loading() {
      
       <div className='mt-[1.5rem] grid grid-cols-1 gap-1'>
       {
-        para.map((item, index)=>(
+        para.map((item:string, index:number)=>(
           <div key={index} className='h-2 w-full rounded p-2 bg-mid-gray'></div>
         ))
       }
@@ -24,13 +24,13 @@ function loading() {
     </div>
     </header>
    <main className={'min-h-[100vh] h-[600px] min-w-full'}>
-    {items.map((item, index)=>(
+    {items.map((item:string, top_index:number)=>(
       
-      <div key={index} className='h-[250px] bg-[#000] min-w-full'>
-        <div className='h-[10px] w-[5rem] rounded bg-primary-black mb-4'></div>
+      <div key={top_index} className={`${top_index !== 0 ?'h-[250px]' :'h-[350px]'} bg-[#000] min-w-full`}>
+        <div className='pl-5 h-[10px] w-[8rem] rounded bg-primary-black mb-4'></div>
         <section className='row ml-[1.5rem] animate-pulse flex space-x-4 overflow-scroll items-center'>
-          {items.map((item, index)=>(
-            <div key={index} className='h-[200px] w-[200px] bg-mid-gray shrink-0'>
+          {items.map((item:string, index:number)=>(
+            <div key={index} className={`${top_index !== 0 ?'h-[200px] w-[200px] ' :'h-[300px] w-[300px]'} bg-mid-gray shrink-0`}>
 
             </div>
           ))}

@@ -3,7 +3,6 @@ import { IMovie, ITvOriginals, media_type, title } from "@/app/types";
 import { BASE_IMG_URL } from "@/app/providers/common";
 import React,{useRef, useState} from "react";
 import Image from "next/image";
-import genres from "@/app/data/genres";
 import { findGenres, randNum } from "@/app/utils";
 import { AiFillPlayCircle, AiFillPlusCircle } from "react-icons/ai";
 import{FaChevronCircleDown, FaThumbsUp} from "react-icons/fa";
@@ -97,7 +96,7 @@ rowRef.current.scroll({left:scroll,behavior:'smooth'});
            </div>
             <ul className="flex space-x-1  text-[0.85rem] p-2 flex-wrap">
               {
-                findGenres(genres,item.genre_ids).map((genre:string,index:number)=>
+                findGenres(item.genre_ids,media_type).map((genre:string,index:number)=>
                 (
                   <Link href={`/genre/${item.genre_ids[index]}`}>
                   <li key={`${genre}-${index}`}>{genre}</li>

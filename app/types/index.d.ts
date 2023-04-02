@@ -71,3 +71,11 @@ export type Rows = [
     documentaries:resultMovie,
     dramaMovies:resultMovie,
 ]
+interface Imedia_type {
+    tv:string;
+    movie:string;
+}
+type genres<Type> = {
+    [Property in keyof Type]: IGenres[];
+  };
+ export type genresObj = genres<Imedia_type>

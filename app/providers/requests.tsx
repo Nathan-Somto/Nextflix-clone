@@ -11,5 +11,7 @@ export const requests={
     fetchHorrorMovies: `${BASE_URL}/discover/movie?api_key=${API_KEY}&with_genres=27`,
     fetchRomanceMovies: `${BASE_URL}/discover/movie?api_key=${API_KEY}&with_genres=10749`,
     fetchDocumentaries: `${BASE_URL}/discover/movie?api_key=${API_KEY}&with_genres=99`,
-    fetchMystery:`${BASE_URL}/discover/movie?api_key=${API_KEY}&with_genres=9648`
+    fetchMystery:`${BASE_URL}/discover/movie?api_key=${API_KEY}&with_genres=9648`,
+    fetchMovieGenre:`${BASE_URL}/discover/movie?api_key=${API_KEY}&with_genres=`,
+    fetchTvGenre:`${BASE_URL}/discover/tv?api_key=${API_KEY}&with_genres=`
 }
