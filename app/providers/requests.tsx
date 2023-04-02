@@ -1,6 +1,7 @@
 import { API_KEY ,BASE_URL} from "./common";
 export const requests={
-    fetchTrending: `${BASE_URL}/trending/all/day?api_key=${API_KEY}`,
+    fetchTrendingMovie: `${BASE_URL}/trending/movie/day?api_key=${API_KEY}`,
+    fetchTrendingTv:`${BASE_URL}/trending/tv/day?api_key=${API_KEY}`,
     fetchNetflixOriginals: `${BASE_URL}/discover/tv?api_key=${API_KEY}&with_networks=213`,
     fetchTopRated: `${BASE_URL}/movie/top_rated?api_key=${API_KEY}&language=en-us`,
     fetchActionMovies: `${BASE_URL}/discover/movie?api_key=${API_KEY}&with_genres=28`,
@@ -9,5 +10,6 @@ export const requests={
     fetchComedyMovies: `${BASE_URL}/discover/movie?api_key=${API_KEY}&with_genres=35`,
     fetchHorrorMovies: `${BASE_URL}/discover/movie?api_key=${API_KEY}&with_genres=27`,
     fetchRomanceMovies: `${BASE_URL}/discover/movie?api_key=${API_KEY}&with_genres=10749`,
-    fetchDocumentaries: `${BASE_URL}/discover/movie?api_key=${API_KEY}&with_genres=99`
+    fetchDocumentaries: `${BASE_URL}/discover/movie?api_key=${API_KEY}&with_genres=99`,
+    fetchMystery:`${BASE_URL}/discover/movie?api_key=${API_KEY}&with_genres=9648`
 }

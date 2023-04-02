@@ -1,6 +1,7 @@
 import { IGenres } from "../types";
 
 export function truncate(overview:string, end:number){
+   if(!overview) return '';
    let words = overview.split(' ');
    return  words.length > 150 ?words.slice(0,150).join(' ') : words.slice(0,end).join(' ');
 }

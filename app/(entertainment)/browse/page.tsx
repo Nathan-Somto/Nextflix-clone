@@ -1,5 +1,6 @@
 import Banner from "@/app/components/Banner";
 import Row from "@/app/components/Row";
+import TrailerModal from "@/app/components/TrailerModal";
 import { requests } from "@/app/providers/requests";
 import { Rows } from "@/app/types";
 import { randNum } from "@/app/utils";
@@ -12,8 +13,16 @@ export async function getNetflixOriginals() {
   return data;
 }
 
-export async function getTrending() {
-  const res = await fetch(requests.fetchTrending, { cache: "no-store" });
+export async function getTrendingMovie() {
+  const res = await fetch(requests.fetchTrendingMovie, { cache: "no-store" });
+  return res.json();
+}
+export async function getTrendingTv() {
+  const res = await fetch(requests.fetchTrendingTv, { cache: "no-store" });
+  return res.json();
+}
+export async function getMystery() {
+  const res = await fetch(requests.fetchMystery, { cache: "no-store" });
   return res.json();
 }
 export async function getTopRated() {
@@ -51,7 +60,9 @@ export async function getDramaMovies() {
 
 async function Browse() {
   const netflixOriginalsData = getNetflixOriginals();
-  const trendingNowData = getTrending();
+  const trendingMovieData = getTrendingMovie();
+  const trendingTvData =getTrendingTv();
+  const mysteryMoviesData = getMystery();
   const topRatedData = getTopRated();
   const animationMoviesData = getAnimationMovies();
   const actionMoviesData = getActionMovies();
@@ -62,7 +73,9 @@ async function Browse() {
   const dramaMoviesData = getDramaMovies();
   const [
     netflixOriginals,
-    trendingNow,
+    trendingMovie,
+    trendingTv,
+    mysteryMovies,
     topRated,
     animationMovies,
     actionMovies,
@@ -73,7 +86,9 @@ async function Browse() {
     dramaMovies,
   ]: Rows = await Promise.all([
     netflixOriginalsData,
-    trendingNowData,
+    trendingMovieData,
+    trendingTvData,
+    mysteryMoviesData,
     topRatedData,
     animationMoviesData,
     actionMoviesData,
@@ -90,54 +105,76 @@ const index = randNum(netflixOriginals.results.length);
     <main className="mt-[-5%]">
       <Row
         title={"Netflix Originals"}
+        media_type={'tv'}
         data={netflixOriginals.results}
         isLargeRow={true}
       />
       <Row 
-        title={"Trending"} 
-        data={trendingNow.results} 
+        title={"Trending Movies"} 
+        media_type={'movie'}
+        data={trendingMovie.results} 
+        isLargeRow={false} />
+         <Row 
+        title={"Trending Series"}
+        media_type={'movie'} 
+        data={trendingTv.results} 
         isLargeRow={false} />
       <Row 
         title={"Top rated"} 
+        media_type={'movie'}
         data={topRated.results} 
         isLargeRow={false} 
       />
+
       <Row
         title={"Animated Movies"}
+        media_type={'movie'}
         data={animationMovies.results}
         isLargeRow={false}
       />
       <Row
         title={"Action Movies"}
+        media_type={'movie'}
         data={actionMovies.results}
         isLargeRow={false}
       />
       <Row
         title={"Comedy Movies"}
+        media_type={'movie'}
         data={comedyMovies.results}
         isLargeRow={false}
       />
+       <Row 
+        title={"Mystery Movies"}
+        media_type={'movie'} 
+        data={mysteryMovies.results} 
+        isLargeRow={false} />
       <Row
         title={"Horror movies"}
+        media_type={'movie'}
         data={horrorMovies.results}
         isLargeRow={false}
       />
       <Row
         title={"Romance Movies"}
+        media_type={'movie'}
         data={romanceMovies.results}
         isLargeRow={false}
       />
       <Row
         title={"Documentaries"}
+        media_type={'movie'}
         data={documentaries.results}
         isLargeRow={false}
       />
       <Row
         title={"Drama Movies"}
+        media_type={'movie'}
         data={dramaMovies.results}
         isLargeRow={false}
       />
     </main>
+    <TrailerModal/>
     </>
   );
 }

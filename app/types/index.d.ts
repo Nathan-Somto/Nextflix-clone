@@ -2,7 +2,8 @@ export interface IGenres{
     id:number;
     name:string;
 }
-export type title = "Netflix Originals" | "Action Movies" | "Romance Movies" | "Trending" | "Top rated"| "Animated Movies"| "Comedy Movies"| "Documentaries"|"Horror movies" | "Drama Movies";
+export type media_type ='tv'| "movie";
+export type title = "Netflix Originals" | "Action Movies" | "Trending Movies" |"Trending Series"|"Mystery Movies"|"Romance Movies" | "Trending" | "Top rated"| "Animated Movies"| "Comedy Movies"| "Documentaries"|"Horror movies" | "Drama Movies";
 export interface IMovie{
     adult:boolean;
     backdrop_path:string;
@@ -48,15 +49,19 @@ interface IVideo{
     piblished_at:string;
     id:string;
 }
-export interface Video{
+export interface Video extends IMovie{
 id:number;
-results:IVideo[];
+first_air_date:string;
+genres:IGenres[];
+videos:{results:IVideo[]};
 }
 type resultTvOriginals = {results:ITvOriginals[]}
 type resultMovie = {results:IMovie[]}
 export type Rows = [ 
     netflixOriginals:resultTvOriginals,
-    trendingNow:resultMovie,
+    trendingMovie:resultMovie,
+    trendingTv:resultMovie,
+    trendingMystery:resultMovie,
     topRated:resultMovie,
     animationMovies:resultMovie,
     actionMovies:resultMovie,

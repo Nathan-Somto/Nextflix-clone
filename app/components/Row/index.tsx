@@ -1,23 +1,27 @@
 "use client";
-import { IMovie, ITvOriginals, title } from "@/app/types";
+import { IMovie, ITvOriginals, media_type, title } from "@/app/types";
 import { BASE_IMG_URL } from "@/app/providers/common";
 import React,{useRef, useState} from "react";
 import Image from "next/image";
 import genres from "@/app/data/genres";
 import { findGenres, randNum } from "@/app/utils";
 import { AiFillPlayCircle, AiFillPlusCircle } from "react-icons/ai";
-import{FaChevronCircleDown, FaThumbsUp, FaVolumeUp} from "react-icons/fa";
+import{FaChevronCircleDown, FaThumbsUp} from "react-icons/fa";
 import {motion} from 'framer-motion';
+import Link from "next/link";
+import { TrailerContext, useTrailer } from "@/app/context/TrailerContext";
+
+
 
 type props = {
   data: IMovie[] | ITvOriginals[];
   title: title;
   isLargeRow: boolean;
+  media_type:media_type;
 };
-type details ={
-  [id:number]:boolean
-}
-function Row({ data, title, isLargeRow }: props): JSX.Element {
+
+function Row({ data, title, isLargeRow ,media_type}: props): JSX.Element {
+  const {trailer,setTrailer,setOpenModal} = useTrailer() as TrailerContext;
   const rowRef = useRef<HTMLElement>(null);
   const[show, setShow] = useState(false);
   function handleScrollClick(direction:string){
@@ -42,7 +46,7 @@ rowRef.current.scroll({left:scroll,behavior:'smooth'});
      
     
 
-  {data && data.map((item, index) => (
+  {data && data.map((item:ITvOriginals | IMovie, index:number) => (
           /* check is done in case of a dead link  */ <div
             key={item.id}
          
@@ -69,13 +73,20 @@ rowRef.current.scroll({left:scroll,behavior:'smooth'});
           
            <div className={`px-4 pt-4 bg-primary-black `}>
            <div className="flex w-full justify-between items-center">
-            <div className="flex items-center space-x-3">
-              <AiFillPlayCircle size={18} color="rgb(150,150,150)"/>
-              <AiFillPlusCircle size={18} color="rgb(150,150,150)"/>
-                <FaThumbsUp size={'18'} color={'rgb(150,150,150)'}/>
+            <div className="flex items-center space-x-3 cursor-pointer">
+              <AiFillPlayCircle size={18} color="rgb(250,250,250)" onClick={()=>
+                {
+                  setTrailer({...trailer,...{id:item.id}});
+                  setOpenModal(true);
+                }}/>
+              <AiFillPlusCircle size={18} color="rgb(250,250,250)"/>
+                <FaThumbsUp size={'18'} color={'rgb(250,250,250)'}/>
               
             </div>
-            <FaChevronCircleDown size={18} color="rgb(150,150,150)"/>
+            <Link href={`/details/${media_type}/${item.id}`}>
+            <FaChevronCircleDown size={18} color="rgb(250,250,250)" />
+            </Link>
+          
            </div>
            <div className="flex  space-x-2 items-center text-[12px] mt-2 font-medium">
             <p className={`${item.vote_average <5.0 ?'text-[#d23d3d]':'text-[#2a842a]'}`}>{Math.ceil(item.vote_average *10)}% Match</p>
@@ -86,15 +97,18 @@ rowRef.current.scroll({left:scroll,behavior:'smooth'});
            </div>
             <ul className="flex space-x-1  text-[0.85rem] p-2 flex-wrap">
               {
-                findGenres(genres,item.genre_ids).map((item,index)=>
+                findGenres(genres,item.genre_ids).map((genre:string,index:number)=>
                 (
-                  <li key={`${item}-${index}`}>{item}</li>
+                  <Link href={`/genre/${item.genre_ids[index]}`}>
+                  <li key={`${genre}-${index}`}>{genre}</li>
+                  </Link>
                 ))
               }
             </ul>
            </div>
            </motion.div>
           </div>
+         
         ))}
 
     
