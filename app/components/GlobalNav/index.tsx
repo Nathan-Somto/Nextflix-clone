@@ -44,7 +44,7 @@ function GlobalNav() {
       >
         <Image
           className={"cursor-pointer rounded-md "}
-          src={"/avatar-1.png"}
+          src={"/avatar/avatar-1.png"}
           alt="profile avatar"
           height={40}
           width={40}
@@ -53,7 +53,7 @@ function GlobalNav() {
         {dropdown && (
           <div className="absolute top-[130%] text-center  hover:first:bg-mid-gray w-[6rem] h-[6.5rem] right-[5%] px-3 py-1 bg-[rgba(0,0,0,0.63)] flex flex-col rounded-md justify-center items-center z-[15] space-y-3 transition-all duration-200 ease-in ">
             <Link
-              href="/profile/johnDoe"
+              href="/profile/John"
               className={
                 "cursor-pointer hover:bg-[rgba(63,63,63,0.57)] w-full py-1 mx-[-1rem]"
               }
