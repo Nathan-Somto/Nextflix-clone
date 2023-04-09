@@ -1,5 +1,13 @@
 {
+  "editor.fontFamily": "Cascadia Code Pl, Consolas",
+  "editor.autoIndent": "brackets",
+  "editor.lineHeight": 23,
   "typescript.tsdk": "node_modules\\typescript\\lib",
   "typescript.enablePromptUseWorkspaceTsdk": true,
+  "editor.fontSize": 15,
+  "editor.cursorStyle": "line-thin",
+  "editor.fontWeight": "500",
+  "editor.fontLigatures": "'ss01', 'ss02', 'ss03', 'ss04', 'ss05', 'ss06', 'zero', 'onum'"
+  
 
 }

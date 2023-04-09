@@ -24,7 +24,7 @@ function Banner({ data,index }: { data: ITvOriginals[],index:number}) {
 
       <div className="absolute left-[1.875rem] top-[9rem] h-[12.5rem] text-[14px] md:text-base">
         <h1 className="text-5xl font-bold mb-[1.1rem]">{data[index]?.title ||data[index]?.name|| data[index]?.original_name}</h1>
-        <div className="w-[80%] leading-[1.3] h-[5rem] mb-8 max-w-[22.5rem] text-[1rem] break-words">
+        <div className="w-[80%] leading-[1] md:leading-[1.3] h-[5rem] mb-8 max-w-[22.5rem] text-[0.75ren] md:text-[1rem] break-words">
           <p>
             {truncate(
               data[index].overview,
@@ -33,7 +33,7 @@ function Banner({ data,index }: { data: ITvOriginals[],index:number}) {
           </p>
         </div>
        </div>
-       <div className="flex space-x-4 right-[1.875rem]  md:left-[1.875rem] md:right-0 absolute bottom-[20%]">
+       <div className="flex space-x-4  left-[1.875rem] md:right-0 absolute bottom-[20%]">
           <button
           onClick={()=>{ 
             setTrailer({...trailer,...{id:data[index].id}})

@@ -3,7 +3,7 @@ import React from 'react'
 
 function Download() {
   return (
-   <div className='relative lg:h-[350px] h-[300px] w-full md:w-[600px] mx-auto lg:w-[80%] '>
+   <div className='relative h-auto aspect-video w-full md:w-[600px] mx-auto lg:w-[80%] '>
     <Image src={'/stranger_things.jpg'} alt={' stranger things'} fill={true}/>
     <div className='bottom-[5%] bg-[#000] left-0 right-0 mx-auto p-4 h-[5.5rem] lg:w-[40%] w-[65%] min-w-[275px] border border-solid border-mid-gray rounded-xl absolute flex items-center justify-center space-x-3'>
       <Image src={'/stranger_things_poster.png'} alt='poster' height={70} width={60}/>

@@ -4,8 +4,8 @@ import React from 'react'
 
 function signIn() {
   return (
-  <Hero>
-    <SignIn/>
+  <Hero homepage={false}>
+    <SignIn signUpPage={false}/>
   </Hero>
   )
 }
