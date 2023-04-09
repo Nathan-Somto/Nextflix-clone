@@ -79,3 +79,18 @@ type genres<Type> = {
     [Property in keyof Type]: IGenres[];
   };
  export type genresObj = genres<Imedia_type>
+ /*
+  * user data interface 
+  */
+  type urlNumber = 0 | 1 | 2 |3 |4 |5 |6 | 7 | 8 | 9 | 10;
+  type profile ={
+    photoUrl:urlNumber;
+    username:string;
+  }
+ export interface IUser{
+    email:string;
+    password:string;
+    provider:string;
+    firstname:string;
+    profile:profile[];
+  }
