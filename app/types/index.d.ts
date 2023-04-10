@@ -82,15 +82,17 @@ type genres<Type> = {
  /*
   * user data interface 
   */
-  type urlNumber =  1 | 2 |3 |4 |5 |6 | 7 | 8 | 9 | 10;
+  type urlString =  '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9' | '10';
+  type provider = 'google' | "local";
   type profile ={
-    photoUrl:urlNumber;
+    photoUrl:urlString;
     username:string;
   }
  export interface IUser{
+    uid:string;
     email:string;
     password:string;
-    provider:string;
+    provider:provider;
     firstname:string;
     profile:profile[];
   }

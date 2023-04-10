@@ -1,6 +1,8 @@
 "use client";
-import { app, auth } from "@/app/lib/firebase.config";
-import { FirebaseError } from "firebase/app";
+import db,{ auth } from "@/app/lib/firebase.config";
+import {IUser, urlString} from '@/app/types/';
+import { randNum } from "@/app/utils";
+import { addDoc, collection } from "@firebase/firestore";
 import {
   User,
   createUserWithEmailAndPassword,
@@ -68,9 +70,24 @@ function AuthProvider({ children }: { children: React.ReactNode }) {
     return unSubscribe();
   },[]);
   async function signUp(signUpDetails: signUp) {
-    const { email, password } = signUpDetails;
+    const { firstname, email, password } = signUpDetails;
     try {
       let cred = await createUserWithEmailAndPassword(auth, email, password);
+      const user:IUser ={
+        uid:cred.user.uid,
+        email,
+        firstname,
+        password,
+        profile:[
+          {
+            username:firstname,
+            photoUrl:randNum(10).toString() as urlString
+          }
+        ],
+        provider:'local'
+
+      }
+      const docRef = await addDoc(collection(db, "users"),user);
       dispatch({ type: "Login", payload: cred.user });
     } catch (err) {
       dispatch({ type: "Error", payload: err?.message as unknown as string });

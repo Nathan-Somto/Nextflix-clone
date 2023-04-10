@@ -1,6 +1,8 @@
 
-import { initializeApp } from "firebase/app";
+import { FirebaseApp, initializeApp } from "firebase/app";
 import {getAuth} from 'firebase/auth';
+import { getFirestore } from "firebase/firestore";
+
 const firebaseConfig = {
   apiKey: "AIzaSyD_wtfANRULfUD9OhZQbKyN9i09XBKnU4g",
   authDomain: "netflix-nextjs-clone-d3165.firebaseapp.com",
@@ -11,3 +13,7 @@ const firebaseConfig = {
 };
 export const app = initializeApp(firebaseConfig);
 export const auth = getAuth();
+ const db = getFirestore(app);
+ export default db;
+
+

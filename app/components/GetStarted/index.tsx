@@ -4,6 +4,7 @@ import { AiFillCaretRight, AiOutlineArrowRight } from 'react-icons/ai'
 import { authContext, useAuth } from '@/app/context/AuthContext';
 import { useRouter } from 'next/navigation';
 import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function GetStarted() {
   const email:React.RefObject<HTMLInputElement> = useRef<HTMLInputElement>(null);
