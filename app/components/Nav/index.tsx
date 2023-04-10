@@ -3,11 +3,11 @@ import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
 import {Variants, motion} from 'framer-motion';
-import { useAuth } from '@/app/context/AuthContext';
+import { authContext, useAuth } from '@/app/context/AuthContext';
 
 
 function Nav() {
-  const {user} = useAuth();
+  const {user,logOut} = useAuth() as authContext;
     /** 
      *  @todo: add the functionality for sign in
      * create the auth provider context
@@ -49,7 +49,8 @@ function Nav() {
    <motion.nav variants={navVariants} initial={"hidden"} animate={"visible"} className='flex h-16 w-[80%] mx-auto justify-between items-center  bg-[rgba(0,0,0,0)] z-[10] relative top-0'>
    <Link href='/'><Image src={'/logo.png'} alt={'netflix logo'} height={150} width={150} /></Link>
    <motion.div variants={divVariants}>
-   <Link href='/signIn' className='  px-3 py-1 rounded-md bg-primary-red text-[#fff] cursor-pointer hover:bg-[rgb(122,18,20)] transition-all duration-200 ease-in'>sign in</Link>
+
+   {user ? <button className='btn-red' onClick={logOut}>Sign out</button>:<Link href='/signIn' className='btn-red'>Sign in</Link>}
    </motion.div> 
    
    </motion.nav>

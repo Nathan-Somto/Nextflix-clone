@@ -4,6 +4,12 @@
 /* @components .btn-red{
     @apply w-10 px-3 py-1 rounded-md bg-primary-red text-[#fff] cursor-pointer hover:bg-[rgb(122,18,20)] transition-all duration-200 ease-in;
 } */
+/* style componets */
+@layer components{
+    .btn-red{
+        @apply  px-3 py-1 rounded-md bg-primary-red text-[#fff] cursor-pointer hover:bg-[rgb(122,18,20)] transition-all duration-200 ease-in;
+    }
+}
 /* width */
 ::-webkit-scrollbar {
     width: 4px;
