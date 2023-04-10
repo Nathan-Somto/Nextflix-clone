@@ -3,9 +3,11 @@ import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
 import {Variants, motion} from 'framer-motion';
+import { useAuth } from '@/app/context/AuthContext';
 
 
 function Nav() {
+  const {user} = useAuth();
     /** 
      *  @todo: add the functionality for sign in
      * create the auth provider context
@@ -13,16 +15,19 @@ function Nav() {
      */
      const navVariants:Variants ={
       hidden:{
-        y:"100%",
+       opacity:0,
+       scale:0.5
        
       },
       visible:{
-        y:"0%",
+       opacity:1,
+       scale:0.5,
         
         transition:{
           type:"spring",
           bounce:0.6,
           duration:0.2,
+          delayChildren:0.1,
           ease:'easeIn'
 
         }
@@ -36,7 +41,7 @@ function Nav() {
           opacity:1,
           transition:{
             ease:"easeIn",
-            duration:0.45
+            duration:0.25
           }
         }
       }

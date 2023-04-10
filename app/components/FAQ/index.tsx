@@ -22,7 +22,7 @@ function FAQ({data}:props) {
       <motion.h1 initial={{opacity:0, scale:0.5}} whileInView={{opacity:1, scale:0.5}} transition={{ease:'easeIn', delay:0.12}} className="text-[#fff] font-bold text-2xl sm:text-3xl lg:text-5xl mb-6 text-center">Frequently Asked Questions</motion.h1>
       {
       data.map((item,index)=>(
-      <motion.div initial={{x:`${index%2!==0?'-100%':'100%'}`}} whileInView={{x:'0%'}} transition={{type:'spring',duration:0.3,bounce:0.12,}} key={index}>
+      <motion.div initial={{x:`${index%2!==0?'-100%':'100%'}`}} whileInView={{x:'0%'}} transition={{type:'spring',duration:0.3,bounce:0.12,delay:0.2}} key={index}>
       <Label index={index.toString()} setOpen={setOpen} heading={item.heading} open={open}/>
       <Body open={open} para={item.para} index={index.toString()}/>
       </motion.div>))
