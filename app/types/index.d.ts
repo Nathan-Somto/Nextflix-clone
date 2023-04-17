@@ -86,7 +86,7 @@ type genres<Type> = {
   }
   type urlString =  '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9' | '10';
   type provider = 'google' | "local";
-  type profile ={
+  export type profile ={
     photoUrl:urlString;
     username:string;
     my_list?: list[]
