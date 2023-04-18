@@ -1,17 +1,29 @@
 'use client';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { ProfileNameProps } from '../ProfileName'
 import Image from 'next/image';
-import { urlString } from '@/app/types';
+import { profile, urlString } from '@/app/types';
 type AvatarProps =Omit<ProfileNameProps, 'setState'> &{
-    handleProfileAdd?:()=> Promise<void>
+    handleProfileAdd?:()=> Promise<void>;
+    profile:profile[];
 }
-function AvatarPage({handleProfileAdd,setProfileData,edit,handleProfileEdit}:AvatarProps) {
+type urlMaps<T extends string | number | symbol> = 
+{
+  [index in T]?: boolean;
+};
+function AvatarPage({handleProfileAdd,setProfileData,edit,handleProfileEdit,uid,profileId,profile}:AvatarProps) {
   const [url, setUrl] = useState<urlString | '-1'>('-1');
   const [availableUrl, setAvailableUrl] = useState<urlString[]>(['1','2','3','4','5','6','7','8','9','10']);
+  useEffect(()=>{
+    const urlMaps:urlMaps<urlString> = {};
+    profile.forEach((item:profile,index:number)=>{
+      urlMaps[item.photoUrl] = true;
+    });
+    setAvailableUrl([...availableUrl, ...availableUrl.filter((item, index)=> urlMaps[item])]);
+  },[]);
    async function handleProfileOption(){
-      if(edit && handleProfileEdit && url !== '-1'){
-       await handleProfileEdit('Avatar',{username:"", photoUrl:url});
+      if(edit && handleProfileEdit && url !== '-1' && uid && profileId){
+       await handleProfileEdit('Avatar',{username:"", photoUrl:url},uid,profileId);
       }
       if(handleProfileAdd)
       {

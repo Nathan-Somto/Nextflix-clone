@@ -10,9 +10,10 @@ type props ={
     user: IUser
 }
 export type pageState = "Add" | "Edit" | "Profiles"
+export type profileId = 0 | 1|2|3|4|5;
 function Profile({user}:props) {
   const [page,setPage] = useState<pageState>('Profiles');
-  const [profileId, setProfileId] = useState<urlString>('1');
+  const [profileId, setProfileId] = useState<profileId>(0);
   function DynamicPage(){
     switch(page){
       case 'Add':
@@ -32,7 +33,6 @@ function Profile({user}:props) {
     <AnimatePresence>
    <motion.main initial={{opacity:0,scale:0.5}} animate={{opacity:1, scale:1}} exit={{opacity:0}}>
    <ToastContainer position="top-right" theme="colored"/>
-   <h1>Who is Watching ?</h1>
    </motion.main>
    </AnimatePresence>
   )
