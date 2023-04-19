@@ -52,11 +52,11 @@ function EditProfile({uid, profileId,profiles,setPage}:editProps)
             </div>
             );
             case 'Avatar':
-            return  <AvatarPage    handleProfileEdit={handleProfileEdit} edit={true} profileId={profileId} uid={uid}/>;
+            return  <AvatarPage handleProfileEdit={handleProfileEdit} edit={true} profileId={profileId} uid={uid} profile={profiles}/>;
             case 'Name':
-        return    <ProfileName handleProfileEdit={handleProfileEdit} edit={true} profileId={profileId} uid={uid}/>;
-          
+            return <ProfileName handleProfileEdit={handleProfileEdit} edit={true} profileId={profileId} uid={uid}/>;
             default:
+            return <div>An error in state occured</div>
             return;
         }
     }
@@ -71,7 +71,7 @@ function EditProfile({uid, profileId,profiles,setPage}:editProps)
 
   return (
    <section>
-    <div onClick={handlePage}></div>
+    <button onClick={handlePage}>Back</button>
     {DynamicPage()}
    </section>
   )

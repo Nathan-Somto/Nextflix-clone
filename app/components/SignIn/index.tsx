@@ -29,8 +29,8 @@ function SignIn({ signUpPage }: { signUpPage: boolean }) {
         await signUp({ firstname, email, password });
         console.log(user);
         //remove the sign up page from the history stack
-        if(user){
-        Route.replace(`/profile/${firstname}`);
+        if(user !== null){
+        Route.replace(`/profile/${firstname}/${user.uid}`);
         }
        
          if(!message){
@@ -45,8 +45,8 @@ function SignIn({ signUpPage }: { signUpPage: boolean }) {
      
   
       await logIn({ email, password });
-      if(user){
-      Route.replace(`/profile/${user.displayName}`);
+      if(user !== null){
+      Route.replace(`/profile/${user.displayName}/${user.uid}`);
       }
 
       // use react toastify to display error
@@ -65,7 +65,7 @@ function SignIn({ signUpPage }: { signUpPage: boolean }) {
        dispatch({type:"Loading",payload:true});
       await googleSignIn();
        if(user){
-      Route.replace(`/profile/${user.displayName}`);
+      Route.replace(`/profile/${user.displayName}/${user.uid}`);
       return;
       }
       if(!message){

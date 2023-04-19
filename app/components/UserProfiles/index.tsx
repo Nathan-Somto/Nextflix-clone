@@ -3,10 +3,15 @@ import { profile, urlString } from '@/app/types'
 import React,{useState} from 'react'
 import { pageState, profileId } from '../Profile';
 import Image from 'next/image';
+import Link from 'next/link';
  import { doc, updateDoc, arrayRemove } from 'firebase/firestore';
 import {toast, ToastContainer} from 'react-toastify';
 import db from '@/app/lib/firebase.config';
 import { useRouter } from 'next/navigation';
+import DeleteProfileModal from '../DeleteProfileModal';
+import {HiDotsVertical} from 'react-icons/hi';
+import {IoMdAddCircle} from 'react-icons/io';
+ import 'react-toastify/dist/ReactToastify.css';
 
 type Props =
 {
@@ -20,7 +25,8 @@ type Props =
 function UserProfiles({profiles,profileId,numberOfProfiles,setPage,setProfileId,uid}:Props) {
     const route = useRouter();
     const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
-    async function handleProfileDelete(profileId:urlString,uid:string){
+    const [username, setUsername] = useState<string>('');
+    async function handleProfileDelete(profileId:profileId,uid:string){
         // search for the specific user and delete their profile.
 // Get a reference to the user document you want to update
 // use the uid to get a reference to the right document.
@@ -31,7 +37,7 @@ const userDocRef = doc(db, 'users', uid);
 
 //@Todo: add a profile id to identify a profile.
 
-const updateData = { profile: arrayRemove({ photoUrl: profileId }) };
+const updateData = { profile: arrayRemove(profileId) };
 try{
 await updateDoc(userDocRef, updateData); 
 route.refresh();
@@ -55,26 +61,60 @@ catch(err){
         setProfileId(index);
         setPage("Edit");
     }
-    function showDelete(index:profileId){
+    function showDelete(index:profileId,username:string){
         setProfileId(index);
+        setUsername(username);
         setShowDeleteModal(true);
     }
-  return (
-    <div>
-   {showDeleteModal&& <DeleteProfileModal uid={uid} handleProfileDelete={handleProfileDelete} profileId={profileId}/>}
-     <h1>Who is Watching ?</h1>
-     <div><p>{6 - numberOfProfiles} profiles remaining</p></div>
+    function storeUserProfile(index:profileId, uid:string)
     {
-        profiles.map((profile:profile,index:number)=> <div key={`${index}-${profile.photoUrl}`}>
-        <div>
-        <p onClick={()=>handleEditPageTransition(index as profileId)}>Edit</p>
-        <p onClick={()=> showDelete(index as profileId)}>Delete</p>
-        </div>
-        <Image src={`/public/avatar-${profile.photoUrl}.png`} height={70} width={70} alt={`${profile.username} profile pic`}/>
-        <p>{profile.username}</p>
-        </div>)
+        
+            localStorage.setItem('profile',JSON.stringify({uid,index}));
+        
     }
-   <button>Add Profile</button>
+    const h1Variants= {
+        hidden:{
+
+        }
+        ,visible:{
+
+        }
+    }
+
+  return (
+    <div className="text-center flex flex-col justify-center items-center min-h-screen relative">
+   {showDeleteModal&& <DeleteProfileModal uid={uid} handleProfileDelete={handleProfileDelete} profileId={profileId} setShowDeleteModal={setShowDeleteModal} username={username}/>}
+   <ToastContainer position='top-right' theme='colored' />
+     <h1 className='text-2xl md:text-3xl  lg:text-5xl font-bold text-smoke-white mb-[20px]'>Who is Watching ?</h1>
+     <div className='absolute top-0 text-left right-0 text-[1.05rem] pr-4'><p> <span className={`font-semibold ${numberOfProfiles === 6  ? 'text-primary-red':""} `}>{6 - numberOfProfiles}</span> profiles remaining</p></div>
+     <div className="flex space-x-4 flex-wrap my-3 items-center justify-center w-[80%] mx-auto px-3">
+    {
+        profiles.map(
+            (profile:profile,index:number)=> <div className='h-[200px] relative w-[200px] flex flex-col space-y-3 items-center  text-center'   key={`${index}-${profile.photoUrl}`}>
+        <div className='absolute  z-[10] right-[30px] top-[15px]'>
+        <HiDotsVertical size={30} color={'rgb(255,255,255)'}/>
+        
+      
+        </div>
+          <div className="bg-mid-gray text-smoke-white absolute top-[20px] right-[-55px] z-[10] font-normal text-[1.05rem] w-[90px] h-[90px] flex flex-col space-y-3 px-4 py-2">
+        <p onClick={()=>handleEditPageTransition(index as profileId)}>Edit</p>
+        <p onClick={()=> showDelete(index as profileId,profile.username)}>Delete</p>
+        </div>
+        <Link href ={'/browse'} onClick={()=> storeUserProfile(index as profileId, uid)}>
+        <Image src={`/avatar/avatar-${profile.photoUrl}.png`} height={150} className='rounded-md' width={150} alt={`${profile.username} profile pic`}/>
+        </Link>
+        <p className="font-medium text-[1.2rem] capitalize">{profile.username}</p>
+        </div>
+        )
+    }
+    <div className='h-[200px] w-[200px] flex flex-col space-y-3 items-center text-center '>
+    <span className='hover:opacity/50 cursor-pointer'>
+    <IoMdAddCircle size={150} onClick={handleAddPageTransition} color='rgb(45,45,45)'/>
+    </span>
+     <button>Add Profile</button>
+     </div>
+      </div>
+  
     </div>
   )
 }

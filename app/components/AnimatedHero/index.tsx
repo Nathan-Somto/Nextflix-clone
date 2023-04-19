@@ -12,7 +12,7 @@ function AnimatedHero({homepage}:{homepage:boolean}) {
         visible:{
             opacity:1,
             transition:{
-               
+               duration:0.25,
                 ease:"easeIn",
                 
             }
@@ -22,30 +22,33 @@ function AnimatedHero({homepage}:{homepage:boolean}) {
     const h1Variant:Variants ={
         hidden:{
             opacity:0,
-            textShadow:'0px 0pc 80px #fff, 0px 0px 20px #fff 0px 0px 40px #fff',
         }, visible:{
             opacity:1,
-            textShadow:'none',
+           
             transition:{
-                staggerChildren:0.3,
-                delayChildren:0.3,
+                duration:0.25,
+                staggerChildren:0.35,
+                delayChildren:0.25,
                 
             }
         }
     }
     const spanVariant:Variants ={
         hidden:{
+            y:"-150",
             opacity:0,
-            y:"-80",
-            x:"-100"
+            x:"-100",
         },
         visible:{
             opacity:1,
-            y:["-75","-60","-85","-65","-35","-20","0"],
+            y:["-100","-80","-195","-185","-165","-50","30", "20","10","0"],
             x:"0",
+           
             transition:{
-                ease:[0.53,0.34,0.21,0.12],
-                bounce:0.52,
+                type:"spring",
+                ease:[0.73,0.24,0.1,0.52],
+                duration:0.55,  
+                damping:5
             }
         }
     }

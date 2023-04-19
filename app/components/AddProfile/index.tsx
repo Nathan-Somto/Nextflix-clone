@@ -35,7 +35,7 @@ function AddProfile({uid,setPage,profiles}:addProps) {
             case 'Name':
            return <ProfileName  setProfileData={setProfileData} setState={setAddPage} edit={false}/>;
            case 'Avatar':
-           return <AvatarPage  setProfileData={setProfileData}  handleProfileAdd={handleProfileAdd} edit={false}/>
+           return <AvatarPage  setProfileData={setProfileData} handleProfileAdd={handleProfileAdd} edit={false} profile={profiles}/>
            default:
            return <div>Add Profile</div>
         }

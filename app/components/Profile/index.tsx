@@ -6,6 +6,7 @@ import{toast,ToastContainer} from 'react-toastify';
  import 'react-toastify/dist/ReactToastify.css';
 import AddProfile from '../AddProfile';
 import EditProfile from '../EditProfile';
+import UserProfiles from '../UserProfiles';
 type props ={
     user: IUser
 }
@@ -19,7 +20,7 @@ function Profile({user}:props) {
       case 'Add':
       return <AddProfile uid={user.uid} setPage={setPage} profiles={user.profile} />;
       case 'Profiles':
-      return <UserProfiles profiles={user.profile} setPage={setPage} setProfileId={setProfileId} numberOfProfiles={user.profile.length} uid={user.uid}/>;
+      return <UserProfiles profiles={user.profile} setPage={setPage} setProfileId={setProfileId} numberOfProfiles={user.profile.length} uid={user.uid} profileId={profileId}/>;
       case 'Edit':
       return <EditProfile profiles={user.profile} uid={user.uid} setPage={setPage} profileId={profileId}/>;
       default:
@@ -28,11 +29,12 @@ function Profile({user}:props) {
   }
   useEffect(()=>{
     toast.success("Successfully Logged in");
-  });
+  },[]);
   return (
     <AnimatePresence>
    <motion.main initial={{opacity:0,scale:0.5}} animate={{opacity:1, scale:1}} exit={{opacity:0}}>
    <ToastContainer position="top-right" theme="colored"/>
+   {DynamicPage()}
    </motion.main>
    </AnimatePresence>
   )

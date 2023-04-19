@@ -34,11 +34,11 @@ function AvatarPage({handleProfileAdd,setProfileData,edit,handleProfileEdit,uid,
   return (
     <div>
     <div>
-    <Image src={`/public/avatar/avatar-${url}.png`} height={50} width={50} alt="selected user Profile"/>
+    <Image src={`/avatar/avatar-${url}.png`} height={50} width={50} alt="selected user Profile"/>
     <button onClick={handleProfileOption}>Done</button>
     <div>{
       availableUrl.map((item:urlString,index:number)=> <div onClick={()=>setUrl(item)}>
-       <Image src={`/public/avatar/avatar-${item}.png`} fill={true} alt="available  Profile images"/>
+       <Image src={`/avatar/avatar-${item}.png`} fill={true} alt="available  Profile images"/>
       </div>)
     }</div>
     </div>

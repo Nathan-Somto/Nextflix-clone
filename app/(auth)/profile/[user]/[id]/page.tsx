@@ -30,6 +30,7 @@ params:{
 export default async function Page({params}:props) {
   const {user,id} = params;
   const data:IUser = await getUserProfiles(user,id) as DocumentData as IUser;
+  if(data === undefined) return <div> there was an error</div>;
   return (
     <>
   <Nav/>

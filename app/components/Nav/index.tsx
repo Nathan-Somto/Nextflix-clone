@@ -15,18 +15,19 @@ function Nav() {
      */
      const navVariants:Variants ={
       hidden:{
-       opacity:0,
-       scale:0.5
+       
+       scale:0
        
       },
       visible:{
-       opacity:1,
-       scale:0.5,
+     
+       scale:[0.6,0.7,1],
         
         transition:{
           type:"spring",
+          stiffness:400,
           bounce:0.6,
-          duration:0.2,
+          duration:0.5,
           delayChildren:0.1,
           ease:'easeIn'
 
