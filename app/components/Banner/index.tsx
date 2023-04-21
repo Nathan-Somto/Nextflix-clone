@@ -41,7 +41,7 @@ function Banner({ data,index }: { data: ITvOriginals[],index:number}) {
 
           }}
             className={
-              "outline-[#fff] cursor-pointer border-none text-[primary-black] rounded-sm px-8 space-x-3 py-2 bg-[rgba(51,51,51,0.53)] hover:text-primary-black hover:bg-smoke-white transition-all duration-200 ease-linear "
+              "outline-[#fff] cursor-pointer border-none text-primary-black rounded-sm px-8 space-x-3 py-2 bg-[rgba(51,51,51,0.53)] hover:text-primary-black hover:bg-smoke-white transition-all duration-200 ease-linear "
             }
           >
             <span><FaPlay color="#000" size="15" className='inline'/></span>
@@ -50,7 +50,7 @@ function Banner({ data,index }: { data: ITvOriginals[],index:number}) {
           <Link
           href={`/details/tv/${data[index].id}`}
             className={
-              "outline-[#fff] cursor-pointer border-none text-[primary-black] rounded-sm px-8 py-2 space-x-3 bg-[rgba(51,51,51,0.53)] hover:text-primary-black hover:bg-smoke-white transition-all duration-200 ease-linear "
+              "outline-[#fff] cursor-pointer border-none text-primary-black rounded-sm px-8 py-2 space-x-3   bg-smoke-white transition-all duration-200 ease-linear "
             }
           >
             <span><FaInfo color="#000" size="15" className='inline'/></span>

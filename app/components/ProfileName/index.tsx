@@ -1,8 +1,6 @@
 'use client';
-import React, { FormEvent, useRef, useState } from 'react'
-import { addPage } from '../AddProfile';
-import { profile } from '@/app/types';
-import { profileId } from '../Profile';
+import React, {  useRef, useState } from 'react'
+import { profile,profileId, addPage } from '@/app/types';
 import {motion} from 'framer-motion';
 export type ProfileNameProps ={
     setState?:React.Dispatch<React.SetStateAction<addPage>>;

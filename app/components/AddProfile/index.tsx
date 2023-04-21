@@ -1,22 +1,23 @@
 'use client';
 import React, { useState } from 'react'
-import { pageState } from '../Profile'
-import { profile } from '@/app/types'
+import { profile, addPage } from '@/app/types'
 import { arrayUnion, doc, updateDoc } from 'firebase/firestore';
 import db from '@/app/lib/firebase.config';
 import ProfileName from '../ProfileName';
 import AvatarPage from '../AvatarPage';
 import { editProps } from '../EditProfile';
-export type addPage = 'Name' |'Avatar';
+import { FaChevronLeft } from 'react-icons/fa';
+import {motion} from 'framer-motion';
 type addProps =Omit<editProps, 'profileId'>;
 function AddProfile({uid,setPage,profiles}:addProps) {
     const [profileData, setProfileData] = useState<profile>({username:'',photoUrl:'1'});
     const [addPage, setAddPage] = useState<addPage>('Name');
     async function handleProfileAdd(){
-        const docRef = doc(db, 'user',uid)
-       try{ await updateDoc(docRef,{
+        const docRef = doc(db, 'users',uid)
+       try{ let res = await updateDoc(docRef,{
             profile:arrayUnion(profileData)
         });
+        console.log("added profile",res);
         setPage('Profiles');
         }
         catch(err){
@@ -40,9 +41,10 @@ function AddProfile({uid,setPage,profiles}:addProps) {
            return <div>Add Profile</div>
         }
     }
+    console.log("the profile data: ",profileData);
   return (
     <div>
-    <div onClick={handlePage}>Back</div>
+    <button onClick={handlePage} className='btn-back ml-3' ><motion.span whileHover={{x:-10}} transition={{type:"spring", bounce:0.65}}> <FaChevronLeft size={16} color={'#E5E5E5'}/></motion.span>Back</button>
     {DynamicAddPage()}
     </div>
   )

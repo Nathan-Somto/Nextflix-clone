@@ -1,4 +1,5 @@
-import GlobalNav from "../components/GlobalNav";
+import EntertainmentNav from "../components/EntertainmentNav";
+import EntertainmentFooter from '../components/EntertainmentFooter';
 
 export default function Layout({
     children,
@@ -7,8 +8,9 @@ export default function Layout({
   }) {
     return (
      <>
-     <GlobalNav/>
+     <EntertainmentNav/>
     {children}
+    <EntertainmentFooter/>
      </>
     )
   }

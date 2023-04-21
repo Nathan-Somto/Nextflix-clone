@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { ProfileNameProps } from '../ProfileName'
 import Image from 'next/image';
 import { profile, urlString } from '@/app/types';
+import {Variants, motion} from 'framer-motion';
 type AvatarProps =Omit<ProfileNameProps, 'setState'> &{
     handleProfileAdd?:()=> Promise<void>;
     profile:profile[];
@@ -22,25 +23,58 @@ function AvatarPage({handleProfileAdd,setProfileData,edit,handleProfileEdit,uid,
     setAvailableUrl([...availableUrl, ...availableUrl.filter((item, index)=> urlMaps[item])]);
   },[]);
    async function handleProfileOption(){
+    console.log("clciked");
       if(edit && handleProfileEdit && url !== '-1' && uid && profileId){
        await handleProfileEdit('Avatar',{username:"", photoUrl:url},uid,profileId);
       }
-      if(handleProfileAdd)
+      if(handleProfileAdd && url !== '-1' && setProfileData)
       {
-
+        console.log("in profile add");
+          setProfileData((prevState)=>({...prevState,photoUrl:url}));
      await handleProfileAdd();
      }
     }
+    const containerVariants:Variants={
+      hidden:{
+        opacity:0,
+      },
+      visible:{
+        opacity:1,
+        transition:{
+          delayChildren:0.25,
+          staggerChildren:0.35,
+        }
+
+      }
+    }
+    const childrenVariants:Variants={
+      hidden:{
+        opacity:0,
+        scale:0,
+      },
+      visible:{
+        opacity:1,
+        scale:1,
+        transition:{
+          type:'spring',
+          stiffness:250,
+
+        }
+      }
+    }
   return (
-    <div>
-    <div>
-    <Image src={`/avatar/avatar-${url}.png`} height={50} width={50} alt="selected user Profile"/>
-    <button onClick={handleProfileOption}>Done</button>
-    <div>{
-      availableUrl.map((item:urlString,index:number)=> <div onClick={()=>setUrl(item)}>
+    <div className='flex md:flex-row flex-col min-h-screen md:divide-x-2 justify-evenly border-mid-gray divide-y-2 md:divide-y-0 w-full px-6'>
+    <div className='flex flex-col space-y-2'>
+    <Image src={`/avatar/avatar-${url}.png`} height={150} width={150} alt="selected user Profile"/>
+    <button onClick={handleProfileOption} className='btn-done'>Done</button>
+    </div>
+    <div className="flex flex-col space-x-3 flex-shrink-0 w-[70%] text-smoke-white">
+    <h2 className="font-semibold text-3xl mb-[50px] pt-[20px] lg:text-4xl">Select an Avatar</h2>
+    <motion.div className="flex  flex-wrap" variants={containerVariants} initial={'hidden'} animate={'visible'}>{
+      availableUrl.map((item:urlString,index:number)=> <motion.div variants={childrenVariants} className="relative h-[80px] w-[80px] mb-3 mr-3 cursor-pointer rounded-md" onClick={()=>setUrl(item)}>
        <Image src={`/avatar/avatar-${item}.png`} fill={true} alt="available  Profile images"/>
-      </div>)
-    }</div>
+      </motion.div>)
+    }</motion.div>
     </div>
     </div>
   )

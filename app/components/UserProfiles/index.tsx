@@ -1,7 +1,6 @@
 'use client';
-import { profile, urlString } from '@/app/types'
+import { profile, urlString,profileId,pageState } from '@/app/types'
 import React,{useState} from 'react'
-import { pageState, profileId } from '../Profile';
 import Image from 'next/image';
 import Link from 'next/link';
  import { doc, updateDoc, arrayRemove } from 'firebase/firestore';
@@ -50,11 +49,11 @@ catch(err){
     }
     function handleAddPageTransition()
     {
-        if(6 - numberOfProfiles === 0 )
-        {
-            toast.error("You have run out of profiles");
-            return;
-        }
+        // if(6 - numberOfProfiles === 0 )
+        // {
+        //     toast.error("You have run out of profiles");
+        //     return;
+        // }
         setPage('Add');
     }
     function handleEditPageTransition(index:profileId){
@@ -66,10 +65,10 @@ catch(err){
         setUsername(username);
         setShowDeleteModal(true);
     }
-    function storeUserProfile(index:profileId, uid:string)
+    function storeUserProfile(index:profileId, uid:string,photoUrl:urlString)
     {
         
-            localStorage.setItem('profile',JSON.stringify({uid,index}));
+            localStorage.setItem('profile',JSON.stringify({uid,index,photoUrl}));
         
     }
     const h1Variants= {
@@ -85,7 +84,7 @@ catch(err){
     <div className="text-center flex flex-col justify-center items-center min-h-screen relative">
    {showDeleteModal&& <DeleteProfileModal uid={uid} handleProfileDelete={handleProfileDelete} profileId={profileId} setShowDeleteModal={setShowDeleteModal} username={username}/>}
    <ToastContainer position='top-right' theme='colored' />
-     <h1 className='text-2xl md:text-3xl  lg:text-5xl font-bold text-smoke-white mb-[20px]'>Who is Watching ?</h1>
+     <h1 className='text-[36px]  lg:text-5xl font-bold text-smoke-white mb-[20px]'>Who is Watching ?</h1>
      <div className='absolute top-0 text-left right-0 text-[1.05rem] pr-4'><p> <span className={`font-semibold ${numberOfProfiles === 6  ? 'text-primary-red':""} `}>{6 - numberOfProfiles}</span> profiles remaining</p></div>
      <div className="flex space-x-4 flex-wrap my-3 items-center justify-center w-[80%] mx-auto px-3">
     {
@@ -96,24 +95,28 @@ catch(err){
         
       
         </div>
-          <div className="bg-mid-gray text-smoke-white absolute top-[20px] right-[-55px] z-[10] font-normal text-[1.05rem] w-[90px] h-[90px] flex flex-col space-y-3 px-4 py-2">
+          <div className={`bg-mid-gray ${numberOfProfiles !== 1 ?'h-[40px]':'h-[90px]'} w-[90px] rounded-[6px] text-smoke-white absolute top-[20px] right-[-55px] z-[10] font-normal text-[1.05rem]  flex flex-col space-y-3 px-4 py-2`}>
         <p onClick={()=>handleEditPageTransition(index as profileId)}>Edit</p>
-        <p onClick={()=> showDelete(index as profileId,profile.username)}>Delete</p>
+     {numberOfProfiles !== 1 ?   <p onClick={()=> showDelete(index as profileId,profile.username)}>Delete</p>: ''}
         </div>
-        <Link href ={'/browse'} onClick={()=> storeUserProfile(index as profileId, uid)}>
+        <Link href ={'/browse'} onClick={()=> storeUserProfile(index as profileId, uid,profile.photoUrl)}>
         <Image src={`/avatar/avatar-${profile.photoUrl}.png`} height={150} className='rounded-md' width={150} alt={`${profile.username} profile pic`}/>
         </Link>
         <p className="font-medium text-[1.2rem] capitalize">{profile.username}</p>
         </div>
         )
     }
-    <div className='h-[200px] w-[200px] flex flex-col space-y-3 items-center text-center '>
-    <span className='hover:opacity/50 cursor-pointer'>
+    {
+        numberOfProfiles !== 6 ?
+    (<div className='h-[200px] w-[200px] flex flex-col space-y-3 items-center text-center mt-3'>
+    <span className='hover:opacity-50 cursor-pointer'>
     <IoMdAddCircle size={150} onClick={handleAddPageTransition} color='rgb(45,45,45)'/>
     </span>
-     <button>Add Profile</button>
-     </div>
+     <button className="font-medium text-[1.2rem] capitalize">Add Profile</button>
+     </div>) : ''
+     }
       </div>
+
   
     </div>
   )

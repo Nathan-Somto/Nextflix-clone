@@ -1,13 +1,17 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-/* @components .btn-red{
-    @apply w-10 px-3 py-1 rounded-md bg-primary-red text-[#fff] cursor-pointer hover:bg-[rgb(122,18,20)] transition-all duration-200 ease-in;
-} */
+
 /* style componets */
 @layer components{
     .btn-red{
         @apply  px-3 py-1 rounded-md bg-primary-red text-[#fff] cursor-pointer hover:bg-[rgb(122,18,20)] transition-all duration-200 ease-in;
+    }
+    .btn-back{
+        @apply flex space-x-2  bg-[rgba(0,0,0,0)] text-smoke-white font-medium active:outline-none items-center;
+    }
+    .btn-done{
+        @apply px-2 py-3 text-smoke-white hover:bg-smoke-white max-w-[150px] cursor-pointer hover:border-smoke-white font-medium text-base hover:text-mid-gray border border-solid border-mid-gray transition-all duration-200;
     }
 }
 /* width */

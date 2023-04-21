@@ -2,9 +2,7 @@
 import React ,{useState}from 'react';
 import AvatarPage from '../AvatarPage';
 import ProfileName from '../ProfileName';
-import { pageState, profileId } from '../Profile';
-import {addPage} from '../AddProfile';
-import {profile, urlString} from '@/app/types';
+import {profile, urlString, pageState, editPage, addPage, profileId} from '@/app/types';
 import { doc, updateDoc } from 'firebase/firestore';
 import db from '@/app/lib/firebase.config';
 export type editProps = {
@@ -13,7 +11,7 @@ export type editProps = {
     profiles:profile[];
     setPage:React.Dispatch<React.SetStateAction<pageState>>;
 }
-export type editPage = "Home" | addPage;
+
 function EditProfile({uid, profileId,profiles,setPage}:editProps) 
 {
     const [editPage, setEditPage] = useState<editPage>('Home');

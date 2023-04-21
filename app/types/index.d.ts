@@ -98,3 +98,12 @@ type genres<Type> = {
     firstname:string;
     profile:profile[];
   }
+  export type profileId = 0 | 1| 2 | 3 | 4 | 5;
+  export type pageState = "Add" | "Edit" | "Profiles";
+  export type addPage = 'Name' | 'Avatar';
+  export type editPage = "Home" | addPage;
+  export type localProfile = {
+    uid:string;
+    photoUrl:urlString;
+    index:profileId;
+  }
