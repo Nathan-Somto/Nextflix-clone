@@ -12,6 +12,7 @@ function EntertainmentNav() {
   const [photoUrl, setPhotoUrl] = useState<urlString>('1');
   const [dropdown, setDropdown] = useState<boolean>(false);
   const [show, setShow] = useState<boolean>(false);
+  const [showMobileNav, setShowMobileNav] = useState<boolean>(false);
   useEffect(() => {
     let profile = localStorage.getItem("profile"); 
     if( profile !== null){
@@ -38,13 +39,16 @@ function EntertainmentNav() {
     >
       <div
         className={
-          "absolute left-[5%] cursor-pointer space-x-4 flex items-center text-[0.75rem] sm:text-base"
+          "absolute left-[5%] cursor-pointer space-x-2 flex items-center  md:text-[1.1rem]"
         }
       >
         <Image src={"/logo.png"} alt="netflix logo" height={100} width={100} />
+        <p onClick={()=> setShowMobileNav(prevState => !prevState)} className="block  md:none">Browse</p>
+        <div className={`md:flex md:space-x-2 md:space-y-0 md:px-0 md:py-0 md:flex-row md:bg-[rgba(0,0,0,0)] md:relative md:top-0 md:left-0 ${showMobileNav? 'flex':'hidden'} absolute top-[80%] left-[60%] flex-col space-y-3 px-3 py-2 items-center bg-primary-black peer-hover:bg-mid-gray transition-all ease-in duration-300`}>
         <Link href={`${user?.displayName}/${user?.uid}/list`}>My List</Link>
         <Link href={`genre/movie/28`}>Movies</Link>
         <Link href={`genre/tv/16`}>Tv Shows</Link>
+        </div>
       </div>
       <div
         className={

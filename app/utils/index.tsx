@@ -1,15 +1,15 @@
 import genres from "../data/genres";
 import { IGenres, genresObj, media_type } from "../types";
 /**
- * @description set's the number of words in my overview to be at most 150 words.
+ * @description set's the number of words in my overview to be at most 100 words.
  * @param {string} overview - the description of a particular movie
  * @param {number} end - the number of characters in the description
- * @returns returns at most 150 words in the overview
+ * @returns returns at most 100 words in the overview
  */
 export function truncate(overview:string, end:number){
    if(!overview) return '';
    let words = overview.split(' ');
-   return  words.length > 150 ?words.slice(0,150).join(' ') : words.slice(0,end).join(' ')+'...';
+   return  words.length > 150 ?words.slice(0,100).join(' ') : words.slice(0,end).join(' ')+'...';
 }
 /**
  * @description returns a random number from 0 to num-1. 

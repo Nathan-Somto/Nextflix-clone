@@ -98,17 +98,12 @@ async function Browse() {
     documentariesData,
     dramaMoviesData,
   ]);
-const index = randNum(netflixOriginals.results.length);
+
   return (
     <>
-     <Banner data={netflixOriginals.results} index={index}/>
+     <Banner data={netflixOriginals.results} />
     <main className="mt-[-5%]">
-      <Row
-        title={"Netflix Originals"}
-        media_type={'tv'}
-        data={netflixOriginals.results}
-        isLargeRow={true}
-      />
+    
       <Row 
         title={"Trending Movies"} 
         media_type={'movie'}
@@ -131,6 +126,12 @@ const index = randNum(netflixOriginals.results.length);
         media_type={'movie'}
         data={animationMovies.results}
         isLargeRow={false}
+      />
+        <Row
+        title={"Netflix Originals"}
+        media_type={'tv'}
+        data={netflixOriginals.results}
+        isLargeRow={true}
       />
       <Row
         title={"Action Movies"}

@@ -8,20 +8,28 @@ import AvatarPage from '../AvatarPage';
 import { editProps } from '../EditProfile';
 import { FaChevronLeft } from 'react-icons/fa';
 import {motion} from 'framer-motion';
+import { useRouter } from 'next/navigation';
 type addProps =Omit<editProps, 'profileId'>;
-function AddProfile({uid,setPage,profiles}:addProps) {
+function AddProfile({setPage,profiles,id}:addProps) {
     const [profileData, setProfileData] = useState<profile>({username:'',photoUrl:'1'});
     const [addPage, setAddPage] = useState<addPage>('Name');
-    async function handleProfileAdd(){
-        const docRef = doc(db, 'users',uid)
-       try{ let res = await updateDoc(docRef,{
-            profile:arrayUnion(profileData)
+    const router = useRouter();
+    async function handleProfileAdd(data:profile,id:string){
+      console.log("profile data in handle add", data);
+        
+       try{ 
+        console.log(id);
+        const docRef = doc(db, 'users',id);
+        console.log("the doc ref", docRef);
+        let res = await updateDoc(docRef,{
+            profile:arrayUnion(data)
         });
         console.log("added profile",res);
         setPage('Profiles');
+        router.refresh();
         }
         catch(err){
-
+          console.log(err);
         }
     }
     function handlePage(){
@@ -34,9 +42,9 @@ function AddProfile({uid,setPage,profiles}:addProps) {
     function DynamicAddPage(){
         switch(addPage){
             case 'Name':
-           return <ProfileName  setProfileData={setProfileData} setState={setAddPage} edit={false}/>;
+           return <ProfileName  setProfileData={setProfileData} setState={setAddPage} edit={false} profileData={profileData} id={id}/>;
            case 'Avatar':
-           return <AvatarPage  setProfileData={setProfileData} handleProfileAdd={handleProfileAdd} edit={false} profile={profiles}/>
+           return <AvatarPage id={id} setProfileData={setProfileData} handleProfileAdd={handleProfileAdd} edit={false} profile={profiles} profileData={profileData}/>
            default:
            return <div>Add Profile</div>
         }

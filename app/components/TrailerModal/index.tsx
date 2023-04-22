@@ -2,11 +2,14 @@
 import { BASE_IMG_URL, BASE_YOUTUBE } from "@/app/providers/common";
 import {  Video } from "@/app/types";
 import React, { useEffect, useState } from "react";
-import { AiOutlineClose } from "react-icons/ai";
+import { AiFillCheckCircle, AiOutlineClose } from "react-icons/ai";
 import { AnimatePresence, motion } from "framer-motion";
 import ReactPlayer from "react-player/lazy";
 import { TrailerContext, useTrailer } from "@/app/context/TrailerContext";
 import { truncate } from "@/app/utils";
+import { AiFillPlayCircle, AiFillPlusCircle } from 'react-icons/ai';
+import { FaInfo, FaThumbsUp } from 'react-icons/fa';
+import { toast, ToastContainer } from "react-toastify";
 function TrailerModal() {
   const {
     trailer: { id, media_type },
@@ -23,21 +26,20 @@ function TrailerModal() {
   useEffect(() => {
     if(!id) return;
     async function getVideos () {
-      /*  */ console.log(id);
 
+    try{  
       let res = await fetch(
         `https://api.themoviedb.org/3/${media_type}/${id}?api_key=3cbaa7017430fa9e773de762de7c63a0&language=en-US&append_to_response=videos`
       );
       let videoData:Video = await res.json();
-        console.log(videoData);
     const{key}=  videoData?.videos?.results[0];
-        console.log(key);
     setInfo(videoData);
-
     setUrl(key);
-   
-     
-      };
+      }
+      catch(err){
+
+      }
+    }
       getVideos();
     return () => {
       
@@ -58,30 +60,48 @@ function TrailerModal() {
       exit={{opacity:0, scale:0.5}}
       className="w-full h-full z-[1500] fixed top-0 left-0 bg-[rgba(0,0,0,0.5)]"
     >
-      <motion.div
-        initial={{ top: "-100%", opacity: 0 }}
-        animate={{ top: ["-100%", "-50%", "0%", "5%"], opacity: 1 }}
-        transition={{ duration: 0.4 ,delay:0.3}}
-        className="overflow-scroll  w-[80%] max-w-[600px] absolute top-[5%] left-[50%]  translate-x-[-50%] mx-auto"
-      >
-        <div className="absolute  right-[0] z-[50] cursor-pointer">
+     <div className="modalButton  rounded-full bg-mid-gray absolute p-3 border border-solid hover:border-smoke-white right-[10px] z-[50] cursor-pointer">
           <AiOutlineClose
             size={50}
             color="#fff"
             onClick={() => setOpenModal(false)}
           />
         </div>
+      <motion.div
+        initial={{scale:0 }}
+        animate={{ scale:[0,0,0.5,0.5,0.55,0.75,0.75,1,1] }}
+        transition={{ duration: 0.4 ,delay:0.3, ease:[0.31,0.14,0.56,0.23], type:"spring", stiffness:10}}
+        className="overflow-scroll  w-[80%] max-w-[600px] absolute top-[5%] left-[50%]  translate-x-[-50%] mx-auto"
+      >
+       
         <div className={`relative h-[18rem] bg-cover bg-center`} style={{backgroundImage:`${!url?`url(${BASE_IMG_URL+ info?.backdrop_path.slice(1)})`:''}`}}>
         {url && (
-         
-          <ReactPlayer
+         <>          <ReactPlayer
             url={BASE_YOUTUBE + url}
             width={"100%"}
             height={"100%"}
             loop={true}
+            playing
             playsinline={true}
             muted={muted}
           />
+          <div className="absolute bottom-[10%] left-[5%] flex">
+          <div>
+          <span>
+          <AiFillPlayCircle/>
+          </span>
+          <span>
+          <AiFillPlusCircle/>
+          <AiFillCheckCircle/>
+          </span>
+          <span>
+            <FaThumbsUp/>
+          </span>
+          </div>
+          <FaInfo/>
+          </div>
+          </>
+
          
         )}
           <div className="absolute top-[30%] md:top-[50%] text-xl font-bold    ">

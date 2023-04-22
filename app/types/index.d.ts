@@ -103,7 +103,7 @@ type genres<Type> = {
   export type addPage = 'Name' | 'Avatar';
   export type editPage = "Home" | addPage;
   export type localProfile = {
-    uid:string;
+    id:string;
     photoUrl:urlString;
     index:profileId;
   }

@@ -8,19 +8,20 @@ import AddProfile from '../AddProfile';
 import EditProfile from '../EditProfile';
 import UserProfiles from '../UserProfiles';
 type props ={
-    user: IUser
+    user: IUser;
+    id:string;
 }
-function Profile({user}:props) {
+function Profile({user,id}:props) {
   const [page,setPage] = useState<pageState>('Profiles');
   const [profileId, setProfileId] = useState<profileId>(0);
   function DynamicPage(){
     switch(page){
       case 'Add':
-      return <AddProfile uid={user.uid} setPage={setPage} profiles={user.profile} />;
+      return <AddProfile  setPage={setPage} profiles={user.profile} id={id} />;
       case 'Profiles':
-      return <UserProfiles profiles={user.profile} setPage={setPage} setProfileId={setProfileId} numberOfProfiles={user.profile.length} uid={user.uid} profileId={profileId}/>;
+      return <UserProfiles profiles={user.profile} setPage={setPage} setProfileId={setProfileId} numberOfProfiles={user.profile.length} id={id} profileId={profileId}/>;
       case 'Edit':
-      return <EditProfile profiles={user.profile} uid={user.uid} setPage={setPage} profileId={profileId}/>;
+      return <EditProfile profiles={user.profile}  setPage={setPage} profileId={profileId} id={id}/>;
       default:
       return <div>no page provided</div>
     }

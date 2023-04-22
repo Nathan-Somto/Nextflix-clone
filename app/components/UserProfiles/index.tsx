@@ -15,21 +15,21 @@ import {IoMdAddCircle} from 'react-icons/io';
 type Props =
 {
     profiles:profile[];
-    uid:string;
+    id:string;
     profileId:profileId;
     numberOfProfiles:number;
     setPage:React.Dispatch<React.SetStateAction<pageState>>;
     setProfileId:React.Dispatch<React.SetStateAction<profileId>>;
 }
-function UserProfiles({profiles,profileId,numberOfProfiles,setPage,setProfileId,uid}:Props) {
+function UserProfiles({profiles,profileId,numberOfProfiles,setPage,setProfileId,id}:Props) {
     const route = useRouter();
     const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
     const [username, setUsername] = useState<string>('');
-    async function handleProfileDelete(profileId:profileId,uid:string){
+    async function handleProfileDelete(profileId:profileId,id:string){
         // search for the specific user and delete their profile.
 // Get a reference to the user document you want to update
 // use the uid to get a reference to the right document.
-const userDocRef = doc(db, 'users', uid); 
+const userDocRef = doc(db, 'users', id); 
 
 // Remove the specified profile from the 'profile' array
 // the photoUrl is unique to every profile
@@ -65,10 +65,10 @@ catch(err){
         setUsername(username);
         setShowDeleteModal(true);
     }
-    function storeUserProfile(index:profileId, uid:string,photoUrl:urlString)
+    function storeUserProfile(index:profileId, id:string,photoUrl:urlString)
     {
         
-            localStorage.setItem('profile',JSON.stringify({uid,index,photoUrl}));
+            localStorage.setItem('profile',JSON.stringify({id,index,photoUrl}));
         
     }
     const h1Variants= {
@@ -82,7 +82,7 @@ catch(err){
 
   return (
     <div className="text-center flex flex-col justify-center items-center min-h-screen relative">
-   {showDeleteModal&& <DeleteProfileModal uid={uid} handleProfileDelete={handleProfileDelete} profileId={profileId} setShowDeleteModal={setShowDeleteModal} username={username}/>}
+   {showDeleteModal&& <DeleteProfileModal id={id} handleProfileDelete={handleProfileDelete} profileId={profileId} setShowDeleteModal={setShowDeleteModal} username={username}/>}
    <ToastContainer position='top-right' theme='colored' />
      <h1 className='text-[36px]  lg:text-5xl font-bold text-smoke-white mb-[20px]'>Who is Watching ?</h1>
      <div className='absolute top-0 text-left right-0 text-[1.05rem] pr-4'><p> <span className={`font-semibold ${numberOfProfiles === 6  ? 'text-primary-red':""} `}>{6 - numberOfProfiles}</span> profiles remaining</p></div>
@@ -99,7 +99,7 @@ catch(err){
         <p onClick={()=>handleEditPageTransition(index as profileId)}>Edit</p>
      {numberOfProfiles !== 1 ?   <p onClick={()=> showDelete(index as profileId,profile.username)}>Delete</p>: ''}
         </div>
-        <Link href ={'/browse'} onClick={()=> storeUserProfile(index as profileId, uid,profile.photoUrl)}>
+        <Link href ={'/browse'} onClick={()=> storeUserProfile(index as profileId, id,profile.photoUrl)}>
         <Image src={`/avatar/avatar-${profile.photoUrl}.png`} height={150} className='rounded-md' width={150} alt={`${profile.username} profile pic`}/>
         </Link>
         <p className="font-medium text-[1.2rem] capitalize">{profile.username}</p>

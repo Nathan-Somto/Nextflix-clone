@@ -6,17 +6,17 @@ import {profile, urlString, pageState, editPage, addPage, profileId} from '@/app
 import { doc, updateDoc } from 'firebase/firestore';
 import db from '@/app/lib/firebase.config';
 export type editProps = {
-    uid:string;
+    id:string;
     profileId:profileId;
     profiles:profile[];
     setPage:React.Dispatch<React.SetStateAction<pageState>>;
 }
 
-function EditProfile({uid, profileId,profiles,setPage}:editProps) 
+function EditProfile({profileId,profiles,setPage,id}:editProps) 
 {
     const [editPage, setEditPage] = useState<editPage>('Home');
-    async function handleProfileEdit(Edit:addPage,data:profile,uid:string,profileId:profileId){
-        const userDocRef = doc(db, 'users',uid);
+    async function handleProfileEdit(Edit:addPage,data:profile,id:string,profileId:profileId){
+        const userDocRef = doc(db, 'users',id);
         const {username,photoUrl} =data;
     if(Edit === 'Name'){
         //use firebase to edit the name for a particular profile
@@ -50,9 +50,9 @@ function EditProfile({uid, profileId,profiles,setPage}:editProps)
             </div>
             );
             case 'Avatar':
-            return  <AvatarPage handleProfileEdit={handleProfileEdit} edit={true} profileId={profileId} uid={uid} profile={profiles}/>;
+            return  <AvatarPage handleProfileEdit={handleProfileEdit} edit={true} profileId={profileId} id={id} profile={profiles}/>;
             case 'Name':
-            return <ProfileName handleProfileEdit={handleProfileEdit} edit={true} profileId={profileId} uid={uid}/>;
+            return <ProfileName handleProfileEdit={handleProfileEdit} edit={true} profileId={profileId} id={id}/>;
             default:
             return <div>An error in state occured</div>
             return;
